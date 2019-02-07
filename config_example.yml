@@ -1,0 +1,14 @@
+targets:
+  - name: e8
+    board: nrf52dk
+    serial: 000682969524
+  - name: ec
+    board: nrf52dk
+    serial: 000682669302
+  - name: ea
+    board: nrf52840dk
+    serial: 000683393215
+  - name: c3
+    board: nrf52840dk
+    serial: 000683919737
+
