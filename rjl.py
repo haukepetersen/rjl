@@ -24,6 +24,18 @@ import subprocess
 STATUSFILE = "/tmp/rjl-target-config.yml"
 
 
+def get_env(target):
+    env = ["BOARD={}".format(target['board'])]
+    if 'node' in target:
+        env.append("IOTLAB_NODE={}".format(target['node']))
+    if 'exp_id' in target:
+        env.append("IOTLAB_EXP_ID={}".format(target['exp_id']))
+    if 'port' in target:
+        env.append("PORT={}".format(target['port']))
+    if 'serial' in target:
+        env.append("JLINK_SERIAL={}".format(target['serial']))
+    return env
+
 def main(args):
     nodes = {}
 
@@ -35,11 +47,8 @@ def main(args):
     if args.target not in nodes:
         sys.exit("Error: given target is not connected")
 
-    target = nodes[args.target]
-    env = ["BOARD={}".format(target['board']),
-           "PORT={}".format(target['port']),
-           "JLINK_SERIAL={}".format(target['serial'])]
-
+    env = get_env(nodes[args.target])
+    print(env)
     cmd = ' '.join(env + args.cmd)
     print(cmd)
     subprocess.call(cmd, shell=True)
