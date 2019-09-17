@@ -41,7 +41,7 @@ def main(args):
 
     # read session configuration
     with open(STATUSFILE, 'r', encoding='utf-8') as f:
-        nodes = yaml.load(f)
+        nodes = yaml.load(f, Loader=yaml.FullLoader)
 
     # find entry for given target
     if args.target not in nodes:
