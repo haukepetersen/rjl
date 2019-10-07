@@ -34,9 +34,12 @@ def read_devs():
     for tty in acmdev:
         info = proc.check_output(['udevadm', 'info',
                                   '--name={}'.format(tty)]).decode('utf-8')
-        m = re.search("SEGGER_J-Link_(\d+)", info)
+        m = re.search("(SEGGER_J-Link_(\d+))|(ARM_DAPLink_CMSIS-DAP_([0-9a-fA-F]+))", info)
         if m:
-            serials[m.group(1)] = {'port': tty}
+            if m.group(2) != None:
+                serials[m.group(2)] = {'port': tty, 'programmer': 'jlink'}
+            else:
+                serials[m.group(4)] = {'port': tty, 'programmer': 'openocd'}
     return serials
 
 
@@ -73,9 +76,10 @@ def main(args):
         serial = env[k]['serial']
         port = env[k]['port']
         board = env[k]['board']
+        programmer = env[k]['programmer']
 
-        print("{:>4}:  SERIAL={}  PORT={}  BOARD={}".format(k, serial,
-                                                            port, board))
+        print("{:>10}:  SERIAL={}  PORT={}  BOARD={} PROGRAMMER={}".format(
+                                            k, serial, port, board, programmer))
 
 
 if __name__ == "__main__":

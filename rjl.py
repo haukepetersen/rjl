@@ -32,8 +32,13 @@ def get_env(target):
         env.append("IOTLAB_EXP_ID={}".format(target['exp_id']))
     if 'port' in target:
         env.append("PORT={}".format(target['port']))
+    if 'programmer' in target:
+        env.append("PROGRAMMER={}".format(target['programmer']))
     if 'serial' in target:
-        env.append("JLINK_SERIAL={}".format(target['serial']))
+        if target['programmer'] == 'jlink':
+            env.append("JLINK_SERIAL={}".format(target['serial']))
+        else:
+            env.append("DEBUG_ADAPTER_ID={}".format(target['serial']))
     return env
 
 def main(args):
