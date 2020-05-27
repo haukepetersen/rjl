@@ -48,12 +48,22 @@ def main(args):
     with open(STATUSFILE, 'r', encoding='utf-8') as f:
         nodes = yaml.load(f, Loader=yaml.FullLoader)
 
+
     # find entry for given target
     if args.target not in nodes:
         sys.exit("Error: given target is not connected")
 
     env = get_env(nodes[args.target])
     print(env)
+
+    print(args.cmd)
+
+    # special case: open terminal if 'term' is the command
+    if 'term' in args.cmd:
+        print("foo", nodes[args.target]['port'])
+        subprocess.call('pyterm -p {}'.format(nodes[args.target]['port']), shell=True)
+        return
+
     cmd = ' '.join(env + args.cmd)
     print(cmd)
     subprocess.call(cmd, shell=True)
