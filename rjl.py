@@ -56,11 +56,8 @@ def main(args):
     env = get_env(nodes[args.target])
     print(env)
 
-    print(args.cmd)
-
     # special case: open terminal if 'term' is the command
-    if 'term' in args.cmd:
-        print("foo", nodes[args.target]['port'])
+    if 'term' == args.cmd[0]:
         subprocess.call('pyterm -p {}'.format(nodes[args.target]['port']), shell=True)
         return
 
