@@ -46,7 +46,7 @@ def main(args):
 
     # read session configuration
     with open(STATUSFILE, 'r', encoding='utf-8') as f:
-        nodes = yaml.load(f, Loader=yaml.FullLoader)
+        nodes = yaml.load(f, Loader=yaml.BaseLoader)
 
 
     # find entry for given target

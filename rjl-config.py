@@ -52,7 +52,7 @@ def main(args):
         config_file = DEFAULTCFG
 
     with open(config_file, 'r', encoding='utf-8') as f:
-        cfg = yaml.load(f, Loader=yaml.FullLoader)
+        cfg = yaml.load(f, Loader=yaml.BaseLoader)
 
     if not cfg:
         sys.exit("Error: unable to read configuration file")
